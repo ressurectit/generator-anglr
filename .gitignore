@@ -1,0 +1,10 @@
+node_modules/
+
+package-lock.json
+*.js
+*.log
+*.bak
+*.orig
+*~
+
+!generators/*/templates/**/*.js
