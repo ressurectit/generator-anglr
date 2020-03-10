@@ -1,0 +1,10 @@
+export * from './modules';
+{{#ifEquals type 'component'}}
+export * from './components';
+{{/ifEquals}}
+{{#ifEquals type 'directive'}}
+export * from './directives';
+{{/ifEquals}}
+{{#ifEquals type 'pipe'}}
+export * from './pipes';
+{{/ifEquals}}

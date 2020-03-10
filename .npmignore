@@ -4,6 +4,3 @@ src/
 .jsbeautifyrc
 tsconfig.json
 *.log
-!/generators/*/templates/.jsbeautifyrc
-!/generators/*/templates/tsconfig.json
-!/generators/*/templates/src

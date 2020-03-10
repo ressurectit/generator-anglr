@@ -8,7 +8,11 @@ import {nameof} from '@jscrpt/common';
 import {GatheredData, PackageJson} from './interfaces';
 
 const SCAFFOLD_ZIP = 'scaffold.zip';
+const SCAFFOLD_SOURCE_URL = 'https://github.com/kukjevov/ng-universal-demo/archive/1.0.zip';
 
+/**
+ * Anglr project scaffolding generator
+ */
 module.exports = class AnglrGenerator extends Generator
 {
     //######################### private fields #########################
@@ -68,15 +72,19 @@ module.exports = class AnglrGenerator extends Generator
      */
     public async writing()
     {
-        let result = await superagent.get('https://github.com/kukjevov/ng-universal-demo/archive/1.0.zip');
+        //download latest universal demo
+        let result = await superagent.get(SCAFFOLD_SOURCE_URL);
         
         this.fs.write(this.destinationPath(SCAFFOLD_ZIP), result.body);
+
+        this.log(chalk.green(`'${SCAFFOLD_ZIP}' was successfuly obtained from '${SCAFFOLD_SOURCE_URL}'`));
         
         await new Promise(resolve =>
         {
             this.fs.commit(() => resolve());
         });
 
+        //unzip latest universal demo
         await new Promise(resolve =>
         {
             extract(this.destinationPath(SCAFFOLD_ZIP),
@@ -96,6 +104,7 @@ module.exports = class AnglrGenerator extends Generator
                     });    
         });
 
+        //move to local directory and cleanup
         this.fs.move(this.destinationPath('ng-universal-demo-1.0/.*'), this.destinationRoot('.'));
         this.fs.move(this.destinationPath('ng-universal-demo-1.0'), this.destinationPath('.'));
         this.fs.delete(this.destinationPath(SCAFFOLD_ZIP));
@@ -106,6 +115,7 @@ module.exports = class AnglrGenerator extends Generator
             this.fs.commit(() => resolve());
         });
 
+        //update package json
         let packageJson: PackageJson = this.fs.readJSON(this.destinationPath('package.json'));
 
         packageJson.author = this.gatheredData.author;
@@ -117,6 +127,18 @@ module.exports = class AnglrGenerator extends Generator
         {
             this.fs.commit(() => resolve());
         });
+
+        //create git repository if not exists and setup version branch
+        if(!this.fs.exists(this.destinationPath('.git')))
+        {
+            this.spawnCommandSync('git', ['init']);
+        }
+
+        this.spawnCommandSync('git', ['checkout', '-b', '1.0']);
+        this.spawnCommandSync('git', ['add', '.']);
+        this.spawnCommandSync('git', ['commit', '-m', 'INT: initial files for project']);
+
+        this.log(chalk.green(`Git repository initialized sucessfuly`));
     }
 
     /**
@@ -126,10 +148,7 @@ module.exports = class AnglrGenerator extends Generator
     {
         this.log("Installing dependencies");
 
-        this.npmInstall([], {}, () =>
-        {
-            this.log("Application is installed.");
-        });
+        this.npmInstall([], {});
     }
 
     /**
@@ -137,8 +156,8 @@ module.exports = class AnglrGenerator extends Generator
      */
     public end()
     {
-        this.log(`App '${this.gatheredData.projectName}' was generated.`);
-        this.log("To start application and development process, write 'npm start'");
-        this.log("Then your application will be running on 'http://localhost:8888'");
+        this.log(chalk.green(`App '${this.gatheredData.projectName}' was generated.`));
+        this.log(chalk.whiteBright("To start application and development process, write 'npm start'"));
+        this.log(chalk.whiteBright("Then your application will be running on 'http://localhost:8888'"));
     }
 }

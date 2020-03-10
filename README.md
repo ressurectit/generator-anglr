@@ -1,3 +1,5 @@
+[![Build status](https://ci.appveyor.com/api/projects/status/sd4r028kcvm8qupv?svg=true)](https://ci.appveyor.com/project/kukjevov/generator-anglr)
+
 # generator-anglr
 > Yeoman generators for angular projects
 

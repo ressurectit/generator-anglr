@@ -1,0 +1,32 @@
+import {NgModule} from "@angular/core";
+
+{{#ifEquals type 'component'}}
+import { {{capitalizedName}}Component } from '../components';
+{{/ifEquals}}
+{{#ifEquals type 'directive'}}
+import { {{capitalizedName}}Directive } from '../directives
+{{/ifEquals}}
+{{#ifEquals type 'pipe'}}
+import { {{capitalizedName}}Pipe} from '../pipes
+{{/ifEquals}}
+
+/**
+ * Module for {{capitalizedName}} {{type}}
+ */
+@NgModule(
+{
+    imports:
+    [
+    ],
+    declarations:
+    [
+        {{capitalizedName}}{{#ifEquals type 'component'}}Component{{/ifEquals}}{{#ifEquals type 'directive'}}Directive{{/ifEquals}}{{#ifEquals type 'pipe'}}Pipe{{/ifEquals}}
+    ],
+    exports:
+    [
+        {{capitalizedName}}{{#ifEquals type 'component'}}Component{{/ifEquals}}{{#ifEquals type 'directive'}}Directive{{/ifEquals}}{{#ifEquals type 'pipe'}}Pipe{{/ifEquals}}
+    ]
+})
+export class {{capitalizedName}}Module
+{
+}
