@@ -1,23 +1,18 @@
 import * as Generator from 'yeoman-generator';
-import * as Handlebars from 'handlebars';
 import * as chalk from 'chalk';
 import * as path from 'path';
 import {nameof} from '@jscrpt/common';
 import {Project} from "ts-morph";
 
-import {GatheredData, AngularModuleContentsType, AvailableNames} from './interfaces';
+import {GatheredData, AngularModuleContentsType} from './interfaces';
+import {copyTpl, prepareNames} from '../utils';
 
 const MODULES_PATH = 'app/modules';
-
-Handlebars.registerHelper('ifEquals', function(this: any, arg1, arg2, options)
-{
-    return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
-});
 
 // Handlebars.registerHelper('startWithCurlyBraces', function(text)
 // {
 //     var result = '{' + text;
-    
+
 //     return new Handlebars.SafeString(result);
 // });
 
@@ -42,11 +37,11 @@ module.exports = class AnglrModuleGenerator extends Generator
     {
         return this._gatheredData;
     }
-    
+
     //######################### constructor #########################
 
     // The name `constructor` is important here
-    constructor(args: string | string[], opts: {}) 
+    constructor(args: string | string[], opts: {})
     {
         // Calling the super constructor is important so our generator is correctly set up
         super(args, opts);
@@ -55,7 +50,7 @@ module.exports = class AnglrModuleGenerator extends Generator
     }
 
     //######################### public methods - phases #########################
-    
+
     /**
      * Prompts user for configuration
      */
@@ -85,7 +80,7 @@ module.exports = class AnglrModuleGenerator extends Generator
      */
     public async writing()
     {
-        let templateContext = {...this._prepareNames(this._gatheredData.moduleName), ...this._gatheredData};
+        let templateContext = {...prepareNames(this._gatheredData.moduleName), ...this._gatheredData};
 
         //generating component
         if(this._gatheredData.type == 'component')
@@ -121,9 +116,15 @@ module.exports = class AnglrModuleGenerator extends Generator
         });
 
         const project = new Project();
-        project.addSourceFileAtPath(this.destinationPath('app/modules/index.ts'));
 
-        project.getSourceFile('app/modules/index.ts')?.addExportDeclaration(
+        if(!this.fs.exists(this.destinationPath(`${MODULES_PATH}/index.ts`)))
+        {
+            this.fs.write(this.destinationPath(`${MODULES_PATH}/index.ts`), '');
+        }
+
+        project.addSourceFileAtPath(this.destinationPath(`${MODULES_PATH}/index.ts`));
+
+        project.getSourceFile(`${MODULES_PATH}/index.ts`)?.addExportDeclaration(
         {
             moduleSpecifier: `./${templateContext.name}`
         });
@@ -143,19 +144,6 @@ module.exports = class AnglrModuleGenerator extends Generator
     //######################### private methods #########################
 
     /**
-     * Creates all available names from name
-     * @param name Name to be changed to available names
-     */
-    private _prepareNames(name: string): AvailableNames
-    {
-        return {
-            name: name,
-            normalizedName: name.replace(/[A-Z]/g, (str => `-${str.toLowerCase()}`)),
-            capitalizedName: name[0].toUpperCase() + name.substr(1)
-        };
-    }
-
-    /**
      * Copy template and replace handlebars from context
      * @param templatePath Path to template
      * @param destinationPath Destination path
@@ -163,8 +151,6 @@ module.exports = class AnglrModuleGenerator extends Generator
      */
     private _copyTpl(templatePath: string, destinationPath: string, context: any)
     {
-        let template = Handlebars.compile(this.fs.read(this.templatePath(templatePath)));
-            
-        this.fs.write(this.destinationPath(destinationPath), template(context));
+        copyTpl(this, templatePath, destinationPath, context);
     }
 }
