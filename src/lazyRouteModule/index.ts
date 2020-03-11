@@ -25,16 +25,6 @@ module.exports = class AnglrLazyRouteModuleGenerator extends Generator
      */
     private _options: LazyRouteModuleOptions;
 
-    //######################### public properties #########################
-
-    /**
-     * Gets gathered data from user
-     */
-    public get gatheredData(): GatheredData
-    {
-        return this._gatheredData;
-    }
-
     //######################### constructor #########################
 
     // The name `constructor` is important here
@@ -105,7 +95,7 @@ module.exports = class AnglrLazyRouteModuleGenerator extends Generator
      */
     public async writing(): Promise<void>
     {
-        let templateContext = {...prepareNames(this._gatheredData.moduleName), ...this._gatheredData, ...{pagesPath: this._options.pagesPath, }};
+        let templateContext = {...prepareNames(this._gatheredData.moduleName), ...this._gatheredData, ...{pagesPath: this._options.pagesPath}};
         let $copyTpl = (templatePath: string, destinationPath: string, context: any) => copyTpl(this, templatePath, destinationPath, context);
 
         //test existance of pages path
@@ -126,7 +116,6 @@ module.exports = class AnglrLazyRouteModuleGenerator extends Generator
         if(this.fs.exists(this.destinationPath(this._options.rootRoutesFile)))
         {
             const project = new Project();
-
             project.addSourceFileAtPath(this.destinationPath(this._options.rootRoutesFile));
     
             let file = project.getSourceFile(this._options.rootRoutesFile);

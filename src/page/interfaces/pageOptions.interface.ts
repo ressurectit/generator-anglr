@@ -8,10 +8,20 @@ export interface PageOptions extends CommandLineOptions
     /**
      * Path to root routes file, contains 'pages' that are part of top level routes
      */
-    rootRoutesFile?: string;
+    rootRoutesFile: string;
 
     /**
-     * Path to routes file, contains 'pages' that are part of specified module routes
+     * Name of routes file, contains 'pages' that are part of specified module routes, can use '{{moduleName}}' for replacement
      */
-    routesFile?: string;
+    routesFile: string;
+
+    /**
+     * Name of constant storing array of pages for router module
+     */
+    componentsArrayName: string;
+
+    /**
+     * Path to directory containing pages
+     */
+    pagesPath: string;
 }

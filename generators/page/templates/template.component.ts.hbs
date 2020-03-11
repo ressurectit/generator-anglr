@@ -1,0 +1,19 @@
+import {Component, ChangeDetectionStrategy} from "@angular/core";
+import {ComponentRoute} from "@anglr/common/router";
+import {AuthGuard, Authorize} from "@anglr/authentication";
+
+/**
+ * TODO - write comment
+ */
+@Component(
+{
+    selector: '{{normalizedName}}-view',
+    templateUrl: '{{name}}.component.html',
+    styleUrls: ['{{name}}.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
+})
+@Authorize('{{permission}}-page')
+@ComponentRoute({path: '{{route}}', canActivate: [AuthGuard]})
+export class {{capitalizedName}}Component
+{
+}

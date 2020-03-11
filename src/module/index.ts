@@ -29,16 +29,6 @@ module.exports = class AnglrModuleGenerator extends Generator
      */
     private _gatheredData!: GatheredData;
 
-    //######################### public properties #########################
-
-    /**
-     * Gets gathered data from user
-     */
-    public get gatheredData(): GatheredData
-    {
-        return this._gatheredData;
-    }
-
     //######################### constructor #########################
 
     // The name `constructor` is important here
