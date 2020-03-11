@@ -3,9 +3,9 @@ import * as Generator from 'yeoman-generator';
 import {GatheredData, PageOptions} from './interfaces';
 
 /**
- * Angular component subgenerator
+ * Angular page component subgenerator
  */
-module.exports = class AnglrModuleGenerator extends Generator
+module.exports = class AnglrPageComponentGenerator extends Generator
 {
     //######################### private fields #########################
 

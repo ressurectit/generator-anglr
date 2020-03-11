@@ -13,7 +13,7 @@ export interface LazyRouteModuleOptions extends CommandLineOptions
     /**
      * Name of constant storing root routes module options
      */
-    rootRoutesOptionsConst: string;
+    rootRoutesOptionsName: string;
 
     /**
      * Path to directory containing pages
