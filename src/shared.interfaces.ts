@@ -18,3 +18,14 @@ export interface AvailableNames
      */
     capitalizedName: string;
 }
+
+/**
+ * Command line options
+ */
+export interface CommandLineOptions
+{
+    /**
+     * Indication that help is required
+     */
+    help?: boolean;
+}

@@ -6,6 +6,7 @@ import {Project} from "ts-morph";
 
 import {GatheredData, AngularModuleContentsType} from './interfaces';
 import {copyTpl, prepareNames} from '../utils';
+import {CommandLineOptions} from '../shared.interfaces';
 
 const MODULES_PATH = 'app/modules';
 
@@ -43,10 +44,18 @@ module.exports = class AnglrModuleGenerator extends Generator
     // The name `constructor` is important here
     constructor(args: string | string[], opts: {})
     {
-        // Calling the super constructor is important so our generator is correctly set up
         super(args, opts);
 
-        // Next, add your custom code
+        let options: CommandLineOptions = this.options;;
+
+        if(options.help)
+        {
+            console.log(this.usage());
+            console.log('Options:');
+            console.log(this.optionsHelp());
+
+            process.exit(0);
+        }
     }
 
     //######################### public methods - phases #########################
@@ -81,12 +90,13 @@ module.exports = class AnglrModuleGenerator extends Generator
     public async writing()
     {
         let templateContext = {...prepareNames(this._gatheredData.moduleName), ...this._gatheredData};
+        let $copyTpl = (templatePath: string, destinationPath: string, context: any) => copyTpl(this, templatePath, destinationPath, context);
 
         //generating component
         if(this._gatheredData.type == 'component')
         {
-            this._copyTpl('components/index.ts.hbs', path.join(MODULES_PATH, `${templateContext.name}/components/index.ts`), templateContext);
-            this._copyTpl('components/template/template.component.ts.hbs', path.join(MODULES_PATH, `${templateContext.name}/components/${templateContext.name}/${templateContext.name}.component.ts`), templateContext);
+            $copyTpl('components/index.ts.hbs', path.join(MODULES_PATH, `${templateContext.name}/components/index.ts`), templateContext);
+            $copyTpl('components/template/template.component.ts.hbs', path.join(MODULES_PATH, `${templateContext.name}/components/${templateContext.name}/${templateContext.name}.component.ts`), templateContext);
             this.fs.copy(this.templatePath('components/template/template.component.scss'), this.destinationPath(path.join(MODULES_PATH, `${templateContext.name}/components/${templateContext.name}/${templateContext.name}.component.scss`)));
             this.fs.copy(this.templatePath('components/template/template.component.html'), this.destinationPath(path.join(MODULES_PATH, `${templateContext.name}/components/${templateContext.name}/${templateContext.name}.component.html`)));
         }
@@ -94,21 +104,21 @@ module.exports = class AnglrModuleGenerator extends Generator
         //generating directive
         if(this._gatheredData.type == 'directive')
         {
-            this._copyTpl('directives/index.ts.hbs', path.join(MODULES_PATH, `${templateContext.name}/directives/index.ts`), templateContext);
-            this._copyTpl('directives/template/template.directive.ts.hbs', path.join(MODULES_PATH, `${templateContext.name}/directives/${templateContext.name}/${templateContext.name}.directive.ts`), templateContext);
+            $copyTpl('directives/index.ts.hbs', path.join(MODULES_PATH, `${templateContext.name}/directives/index.ts`), templateContext);
+            $copyTpl('directives/template/template.directive.ts.hbs', path.join(MODULES_PATH, `${templateContext.name}/directives/${templateContext.name}/${templateContext.name}.directive.ts`), templateContext);
         }
 
         //generating pipe
         if(this._gatheredData.type == 'pipe')
         {
-            this._copyTpl('pipes/index.ts.hbs', path.join(MODULES_PATH, `${templateContext.name}/pipes/index.ts`), templateContext);
-            this._copyTpl('pipes/template/template.pipe.ts.hbs', path.join(MODULES_PATH, `${templateContext.name}/pipes/${templateContext.name}/${templateContext.name}.pipe.ts`), templateContext);
+            $copyTpl('pipes/index.ts.hbs', path.join(MODULES_PATH, `${templateContext.name}/pipes/index.ts`), templateContext);
+            $copyTpl('pipes/template/template.pipe.ts.hbs', path.join(MODULES_PATH, `${templateContext.name}/pipes/${templateContext.name}/${templateContext.name}.pipe.ts`), templateContext);
         }
 
         //generating module and index
-        this._copyTpl('index.ts.hbs', path.join(MODULES_PATH, `${templateContext.name}/index.ts`), templateContext);
-        this._copyTpl('modules/index.ts.hbs', path.join(MODULES_PATH, `${templateContext.name}/modules/index.ts`), templateContext);
-        this._copyTpl('modules/template.module.ts.hbs', path.join(MODULES_PATH, `${templateContext.name}/modules/${templateContext.name}.module.ts`), templateContext);
+        $copyTpl('index.ts.hbs', path.join(MODULES_PATH, `${templateContext.name}/index.ts`), templateContext);
+        $copyTpl('modules/index.ts.hbs', path.join(MODULES_PATH, `${templateContext.name}/modules/index.ts`), templateContext);
+        $copyTpl('modules/template.module.ts.hbs', path.join(MODULES_PATH, `${templateContext.name}/modules/${templateContext.name}.module.ts`), templateContext);
 
         await new Promise(resolve =>
         {
@@ -139,18 +149,5 @@ module.exports = class AnglrModuleGenerator extends Generator
     {
         this.log(chalk.green(`Angular module '${this._gatheredData.moduleName}' was generated`));
         this.log(chalk.whiteBright('To use it, you have to add it to ') + chalk.whiteBright.bold('import') + chalk.whiteBright(' of desired module.'));
-    }
-
-    //######################### private methods #########################
-
-    /**
-     * Copy template and replace handlebars from context
-     * @param templatePath Path to template
-     * @param destinationPath Destination path
-     * @param context Object context that is used for template replacement
-     */
-    private _copyTpl(templatePath: string, destinationPath: string, context: any)
-    {
-        copyTpl(this, templatePath, destinationPath, context);
     }
 }

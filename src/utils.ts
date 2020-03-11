@@ -1,5 +1,7 @@
 import * as Generator from 'yeoman-generator';
 import * as Handlebars from 'handlebars';
+import {readdirSync} from 'fs';
+
 import {AvailableNames} from "./shared.interfaces";
 
 Handlebars.registerHelper('ifEquals', function(this: any, arg1, arg2, options)
@@ -32,4 +34,15 @@ export function copyTpl(generator: Generator, templatePath: string, destinationP
     let template = Handlebars.compile(generator.fs.read(generator.templatePath(templatePath)));
 
     generator.fs.write(generator.destinationPath(destinationPath), template(context));
+}
+
+/**
+ * Gets array of all directories at specified path
+ * @param source Source path to be probed for sub directories
+ */
+export function getDirectories(source: string): string[]
+{
+    return readdirSync(source, {withFileTypes: true})
+        .filter(dirent => dirent.isDirectory())
+        .map(dirent => dirent.name);
 }

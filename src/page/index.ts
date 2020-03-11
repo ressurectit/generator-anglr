@@ -1,7 +1,6 @@
 import * as Generator from 'yeoman-generator';
 
-import {GatheredData} from './interfaces';
-import {copyTpl} from '../utils';
+import {GatheredData, PageOptions} from './interfaces';
 
 /**
  * Angular component subgenerator
@@ -14,6 +13,16 @@ module.exports = class AnglrModuleGenerator extends Generator
      * Gathered data from user
      */
     private _gatheredData!: GatheredData;
+
+    /**
+     * Current options for application
+     */
+    private _options: PageOptions;
+
+    /**
+     * Array of existing lazy modules
+     */
+    private _lazyModules: string[] = [];
 
     //######################### public properties #########################
 
@@ -33,10 +42,28 @@ module.exports = class AnglrModuleGenerator extends Generator
         // Calling the super constructor is important so our generator is correctly set up
         super(args, opts);
 
-        // Next, add your custom code
+        this._options = this.options as PageOptions;
+
+        if(this._options.help)
+        {
+            console.log(this.usage());
+            console.log('Options:');
+            console.log(this.optionsHelp());
+
+            process.exit(0);
+        }
     }
 
     //######################### public methods - phases #########################
+
+    /**
+     * Initializing and gathering data from project
+     */
+    public initializing(): void
+    {
+        // this._lazyModules = getDirectories(this.destinationPath(this._options.pagesPath)).filter(itm => itm.startsWith('+'));
+        console.log(this._lazyModules);
+    }
 
     /**
      * Prompts user for configuration
@@ -57,18 +84,5 @@ module.exports = class AnglrModuleGenerator extends Generator
      */
     public end()
     {
-    }
-
-    //######################### private methods #########################
-
-    /**
-     * Copy template and replace handlebars from context
-     * @param templatePath Path to template
-     * @param destinationPath Destination path
-     * @param context Object context that is used for template replacement
-     */
-    private _copyTpl(templatePath: string, destinationPath: string, context: any)
-    {
-        copyTpl(this, templatePath, destinationPath, context);
     }
 }
