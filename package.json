@@ -39,6 +39,7 @@
     "dependencies": {
         "yeoman-generator": "4.6.0",
         "@jscrpt/common": "1.1.1",
+        "anglr-formatter": "next",
         "chalk": "3.0.0",
         "yosay": "2.0.2",
         "handlebars": "4.7.3",

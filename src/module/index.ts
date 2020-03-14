@@ -3,6 +3,7 @@ import * as chalk from 'chalk';
 import * as path from 'path';
 import {nameof} from '@jscrpt/common';
 import {Project} from "ts-morph";
+import {format} from 'anglr-formatter';
 
 import {GatheredData, AngularModuleContentsType} from './interfaces';
 import {copyTpl, prepareNames} from '../utils';
@@ -114,6 +115,9 @@ module.exports = class AnglrModuleGenerator extends Generator
         {
             this.fs.commit(() => resolve());
         });
+
+        //correcting module formatting
+        format(path.join(MODULES_PATH, `${templateContext.name}/modules/${templateContext.name}.module.ts`));
 
         const project = new Project();
 
