@@ -15,9 +15,26 @@ npm install -g generator-anglr
 
 Then generate your new project:
 
+**!!! IMPORTANT !!!**: Run this command inside directory where you want to create new project, it does not create new directory project, generates files inside current directory.
+
 ```bash
 yo anglr
 ```
+
+Then you can use subgenerators for scaffolding:
+
+```bash
+yo anglr:subgeneratorName
+```
+
+**Supported subgenerators**
+ 
+ - `component` - Generates `Angular` component
+ - `directive` - Generates `Angular` directive
+ - `pipe` - Generates `Angular` pipe
+ - `page` - Generates `Angular` page component with route and permissions
+ - `module` - Generates `Angular` module with component, or directive or pipe
+ - `lazyRouteModule` - Generates `Angular` lazy route module
 
 ## Getting To Know Yeoman
 

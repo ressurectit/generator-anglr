@@ -5,9 +5,9 @@ import {nameof} from '@jscrpt/common';
 import {Project} from "ts-morph";
 import {format} from 'anglr-formatter';
 
-import {GatheredData, AngularModuleContentsType} from './interfaces';
+import {GatheredData} from './interfaces';
 import {copyTpl, prepareNames} from '../utils';
-import {CommandLineOptions} from '../shared.interfaces';
+import {CommandLineOptions, AngularBuildBlockType} from '../shared.interfaces';
 
 const MODULES_PATH = 'app/modules';
 
@@ -68,7 +68,7 @@ module.exports = class AnglrModuleGenerator extends Generator
                 type: 'list',
                 name: nameof<GatheredData>('type'),
                 message: 'Type of item to be created for module',
-                choices: <Array<AngularModuleContentsType>>['component', 'directive', 'pipe']
+                choices: <Array<AngularBuildBlockType>>['component', 'directive', 'pipe']
             }
             //TODO - add comment input
             //TODO - add input output type for pipe

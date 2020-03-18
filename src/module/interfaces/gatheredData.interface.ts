@@ -1,7 +1,4 @@
-/**
- * Available types to be create inside of new module
- */
-export type AngularModuleContentsType = 'component'|'directive'|'pipe';
+import {AngularBuildBlockType} from '../../shared.interfaces';
 
 /**
  * Gathered data from user
@@ -16,5 +13,5 @@ export interface GatheredData
     /**
      * Type of item to be created for module
      */
-    type: AngularModuleContentsType;
+    type: AngularBuildBlockType;
 }

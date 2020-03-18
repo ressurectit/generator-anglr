@@ -38,6 +38,7 @@
     "homepage": "https://github.com/ressurectit/generator-anglr",
     "dependencies": {
         "yeoman-generator": "4.6.0",
+        "inquirer-file-tree-selection-prompt": "1.0.5",
         "@jscrpt/common": "1.1.1",
         "anglr-formatter": "next",
         "chalk": "3.0.0",
