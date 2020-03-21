@@ -9,6 +9,31 @@ import {GatheredData, PackageJson} from './interfaces';
 
 const SCAFFOLD_ZIP = 'scaffold.zip';
 const SCAFFOLD_SOURCE_URL = 'https://github.com/kukjevov/ng-universal-demo/archive/1.0.zip';
+const ALL_PACKAGES =
+[
+    '@angular/material',
+    '@angular/cdk',
+    '@anglr/animations',
+    '@anglr/authentication',
+    '@anglr/bootstrap',
+    '@anglr/common',
+    '@anglr/error-handling',
+    '@anglr/grid',
+    '@anglr/md-help',
+    '@anglr/notifications',
+    '@anglr/rest',
+    '@anglr/select',
+    '@jscrpt/common',
+    '@fortawesome/fontawesome-free',
+    'moment',
+    'eonasdan-bootstrap-datetimepicker',
+    'typeahead.js',
+    'numeral',
+    'file-saver',
+    'd3',
+    'store',
+    'konami'
+];
 
 /**
  * Anglr project scaffolding generator
@@ -63,6 +88,20 @@ module.exports = class AnglrGenerator extends Generator
                 name: nameof<GatheredData>('author'),
                 message: 'Author name',
                 default: `${this.user.git.name()} <${this.user.git.email()}>`
+            },
+            {
+                type: 'checkbox',
+                name: nameof<GatheredData>('features'),
+                message: 'Anglr features',
+                default: ['Git Version', 'Server Side Rendering', 'ES2015'],
+                choices: ['Git Version', 'Server Side Rendering', 'ES2015']
+            },
+            {
+                type: 'checkbox',
+                name: nameof<GatheredData>('packages'),
+                message: 'Anglr packages',
+                default: ALL_PACKAGES,
+                choices: ALL_PACKAGES
             }
         ]);
     }

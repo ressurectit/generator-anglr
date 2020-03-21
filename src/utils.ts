@@ -46,3 +46,41 @@ export function getDirectories(source: string): string[]
         .filter(dirent => dirent.isDirectory())
         .map(dirent => dirent.name);
 }
+
+/**
+ * Adds items from source to target array if they do not already exists
+ * @param target Target array which will be extended with new values
+ * @param source Source array which contains new items that will be added
+ */
+export function addDistinct<TData>(target: TData[], source: TData[]): void
+{
+    source.forEach(itm =>
+    {
+        if(target.indexOf(itm) >= 0)
+        {
+            return;
+        }
+
+        target.push(itm);
+    });
+}
+
+/**
+ * Gets supplement for current items from all possible items
+ * @param all Array containing all possible items
+ * @param arr Array containing current items
+ */
+export function getArraySupplement<TData>(all: TData[], arr: TData[]): TData[]
+{
+    let result: TData[] = [];
+
+    all.forEach(itm =>
+    {
+        if(arr.indexOf(itm) < 0)
+        {
+            result.push(itm);
+        }
+    });
+
+    return result;
+}
