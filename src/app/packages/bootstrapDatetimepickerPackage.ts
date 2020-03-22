@@ -16,6 +16,14 @@ export class BootstrapDatetimepickerPackage extends PackageBase
         return [];
     }
 
+    /**
+     * Array of packages that should be deleted when this one is not used
+     */
+    public static get cascadeDelete(): AnglrPackages[]
+    {
+        return [];
+    }
+
     //######################### public methods #########################
 
     /**

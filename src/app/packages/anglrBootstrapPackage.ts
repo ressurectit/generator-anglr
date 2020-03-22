@@ -13,6 +13,14 @@ export class AnglrBootstrapPackage extends PackageBase
      */
     public static get dependsOnPackages(): AnglrPackages[]
     {
+        return ['@jscrpt/common', '@anglr/common', 'bootstrap', 'jquery'];
+    }
+
+    /**
+     * Array of packages that should be deleted when this one is not used
+     */
+    public static get cascadeDelete(): AnglrPackages[]
+    {
         return [];
     }
 

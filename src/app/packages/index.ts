@@ -19,7 +19,10 @@ import {KonamiPackage} from './konamiPackage';
 import {MomentPackage} from './momentPackage';
 import {NumeralPackage} from './numeralPackage';
 import {StorePackage} from './storePackage';
-import {TypeaheadPackage} from './typeagheadPackage';
+import {TypeaheadPackage} from './typeaheadPackage';
+import {HandlebarsPackage} from './handlebarsPackage';
+import {BootstrapPackage} from './bootstrapPackage';
+import {JqueryPackage} from './jqueryPackage';
 import {PackageType} from '../packageBase';
 
 /**
@@ -42,8 +45,11 @@ export const packages: {[name: string]: PackageType} =
     '@jscrpt/common': JscrptCommonPackage,
     '@fortawesome/fontawesome-free': FontAwesomePackage,
     'moment': MomentPackage,
+    'bootstrap': BootstrapPackage,
+    'jquery': JqueryPackage,
     'eonasdan-bootstrap-datetimepicker': BootstrapDatetimepickerPackage,
     'typeahead.js': TypeaheadPackage,
+    'handlebars': HandlebarsPackage,
     'numeral': NumeralPackage,
     'file-saver': FileSaverPackage,
     'd3': D3Package,

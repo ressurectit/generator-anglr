@@ -9,6 +9,11 @@ export interface PackageType
      * Array of packages that is this package dependend on
      */
     readonly dependsOnPackages: AnglrPackages[];
+
+    /**
+     * Array of packages that should be deleted when this one is not used
+     */
+    readonly cascadeDelete: AnglrPackages[];
 }
 
 /**

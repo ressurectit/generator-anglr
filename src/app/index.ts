@@ -6,10 +6,13 @@ import * as path from 'path';
 import {nameof} from '@jscrpt/common';
 
 import {GatheredData, PackageJson} from './interfaces';
+import {packages} from './packages';
+import {addDistinct, getArraySupplement} from '../utils';
+import {AnglrPackages} from './interfaces/types';
 
 const SCAFFOLD_ZIP = 'scaffold.zip';
 const SCAFFOLD_SOURCE_URL = 'https://github.com/kukjevov/ng-universal-demo/archive/1.0.zip';
-const ALL_PACKAGES =
+const ALL_PACKAGES: AnglrPackages[] =
 [
     '@angular/material',
     '@angular/cdk',
@@ -166,6 +169,22 @@ module.exports = class AnglrGenerator extends Generator
         {
             this.fs.commit(() => resolve());
         });
+
+        let activePackages = this._gatheredData.packages;
+
+        this._gatheredData.packages.forEach(packageName =>
+        {
+            addDistinct(activePackages, packages[packageName].dependsOnPackages);
+        });
+
+        console.log(activePackages);
+
+        activePackages = getArraySupplement(ALL_PACKAGES, activePackages);
+
+        console.log(activePackages);
+
+        process.exit(0);
+        
 
         //create git repository if not exists and setup version branch
         if(!this.fs.exists(this.destinationPath('.git')))

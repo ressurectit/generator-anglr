@@ -2,9 +2,9 @@ import {PackageBase} from '../packageBase';
 import {AnglrPackages} from '../interfaces/types';
 
 /**
- * Represents package modifications for anglr animations
+ * Represents package modifications for jquery
  */
-export class AnglrAnimationsPackage extends PackageBase
+export class JqueryPackage extends PackageBase
 {
     //######################### public properties #########################
 

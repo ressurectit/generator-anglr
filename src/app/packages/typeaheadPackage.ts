@@ -2,9 +2,9 @@ import {PackageBase} from '../packageBase';
 import {AnglrPackages} from '../interfaces/types';
 
 /**
- * Represents package modifications for anglr animations
+ * Represents package modifications for typeahead
  */
-export class AnglrAnimationsPackage extends PackageBase
+export class TypeaheadPackage extends PackageBase
 {
     //######################### public properties #########################
 

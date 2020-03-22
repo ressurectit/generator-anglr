@@ -2,9 +2,9 @@ import {PackageBase} from '../packageBase';
 import {AnglrPackages} from '../interfaces/types';
 
 /**
- * Represents package modifications for typeahead
+ * Represents package modifications for handlebars
  */
-export class TypeaheadPackage extends PackageBase
+export class HandlebarsPackage extends PackageBase
 {
     //######################### public properties #########################
 
@@ -12,6 +12,14 @@ export class TypeaheadPackage extends PackageBase
      * Array of packages that is this package dependend on
      */
     public static get dependsOnPackages(): AnglrPackages[]
+    {
+        return [];
+    }
+
+    /**
+     * Array of packages that should be deleted when this one is not used
+     */
+    public static get cascadeDelete(): AnglrPackages[]
     {
         return [];
     }

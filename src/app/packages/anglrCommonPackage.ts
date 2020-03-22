@@ -13,6 +13,14 @@ export class AnglrCommonPackage extends PackageBase
      */
     public static get dependsOnPackages(): AnglrPackages[]
     {
+        return ['@jscrpt/common'];
+    }
+
+    /**
+     * Array of packages that should be deleted when this one is not used
+     */
+    public static get cascadeDelete(): AnglrPackages[]
+    {
         return [];
     }
 

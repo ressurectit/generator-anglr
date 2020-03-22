@@ -2,9 +2,9 @@ import {PackageBase} from '../packageBase';
 import {AnglrPackages} from '../interfaces/types';
 
 /**
- * Represents package modifications for anglr animations
+ * Represents package modifications for bootstrap
  */
-export class AnglrAnimationsPackage extends PackageBase
+export class BootstrapPackage extends PackageBase
 {
     //######################### public properties #########################
 
@@ -13,7 +13,7 @@ export class AnglrAnimationsPackage extends PackageBase
      */
     public static get dependsOnPackages(): AnglrPackages[]
     {
-        return [];
+        return ['jquery'];
     }
 
     /**
