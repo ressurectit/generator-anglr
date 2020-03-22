@@ -13,7 +13,7 @@ export class AnglrCommonMaterialPackage extends PackageBase
      */
     public static get dependsOnPackages(): AnglrPackages[]
     {
-        return ['@jscrpt/common'];
+        return ['@angular/material', '@angular/cdk', '@anglr/common'];
     }
 
     /**

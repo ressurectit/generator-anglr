@@ -13,7 +13,7 @@ export class AnglrCommonHotkeysPackage extends PackageBase
      */
     public static get dependsOnPackages(): AnglrPackages[]
     {
-        return ['@jscrpt/common'];
+        return ['angular2-hotkeys'];
     }
 
     /**

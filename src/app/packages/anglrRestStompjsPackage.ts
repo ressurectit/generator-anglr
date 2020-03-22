@@ -13,7 +13,7 @@ export class AnglrRestStompjsPackage extends PackageBase
      */
     public static get dependsOnPackages(): AnglrPackages[]
     {
-        return [];
+        return ['@jscrpt/common', '@anglr/common', 'sockjs-client', '@stomp/stompjs'];
     }
 
     /**
@@ -21,7 +21,7 @@ export class AnglrRestStompjsPackage extends PackageBase
      */
     public static get cascadeDelete(): AnglrPackages[]
     {
-        return [];
+        return ['sockjs-client', '@stomp/stompjs'];
     }
 
     //######################### public methods #########################

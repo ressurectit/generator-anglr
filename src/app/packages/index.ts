@@ -39,6 +39,18 @@ import {TypeaheadPackage} from './typeaheadPackage';
 import {HandlebarsPackage} from './handlebarsPackage';
 import {BootstrapPackage} from './bootstrapPackage';
 import {JqueryPackage} from './jqueryPackage';
+import {Angular2HotkeysPackage} from './angular2HotkeysPackage';
+import {PositionsPackage} from './positionsPackage';
+import {StructuredLogPackage} from './structuredLogPackage';
+import {SourcemappedStacktracePackage} from './sourcemappedStacktracePackage';
+import {Html2canvasPackage} from './html2canvasPackage';
+import {HighlightJsPackage} from './highlightjsPackage';
+import {MarkedPackage} from './markedPackage';
+import {JqueryParamPackage} from './jqueryParamPackage';
+import {CryptJsPackage} from './cryptoJsPackage';
+import {StompJsPackage} from './stompJsPackage';
+import {SockJsPackage} from './sockJsPackage';
+import {ExtendPackage} from './extendPackage';
 import {PackageType} from '../packageBase';
 
 /**
@@ -86,5 +98,17 @@ export const packages: {[name: string]: PackageType} =
     'file-saver': FileSaverPackage,
     'd3': D3Package,
     'store': StorePackage,
-    'konami': KonamiPackage
+    'konami': KonamiPackage,
+    'angular2-hotkeys': Angular2HotkeysPackage,
+    'positions': PositionsPackage,
+    'structured-log': StructuredLogPackage,
+    'sourcemapped-stacktrace': SourcemappedStacktracePackage,
+    'html2canvas': Html2canvasPackage,
+    'highlight.js': HighlightJsPackage,
+    'marked': MarkedPackage,
+    'jquery-param': JqueryParamPackage,
+    'crypto-js': CryptJsPackage,
+    '@stomp/stompjs': StompJsPackage,
+    'sockjs-client': SockJsPackage,
+    'extend': ExtendPackage
 };

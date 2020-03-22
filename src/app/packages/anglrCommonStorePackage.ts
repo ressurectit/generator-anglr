@@ -13,7 +13,7 @@ export class AnglrCommonStorePackage extends PackageBase
      */
     public static get dependsOnPackages(): AnglrPackages[]
     {
-        return ['@jscrpt/common'];
+        return ['store', 'moment', '@anglr/common'];
     }
 
     /**

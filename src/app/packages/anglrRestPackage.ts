@@ -13,7 +13,7 @@ export class AnglrRestPackage extends PackageBase
      */
     public static get dependsOnPackages(): AnglrPackages[]
     {
-        return [];
+        return ['@jscrpt/common', '@anglr/common', 'jquery-param', 'crypto-js'];
     }
 
     /**
@@ -21,7 +21,7 @@ export class AnglrRestPackage extends PackageBase
      */
     public static get cascadeDelete(): AnglrPackages[]
     {
-        return [];
+        return ['jquery-param', 'crypto-js', '@anglr/rest/stompjs'];
     }
 
     //######################### public methods #########################

@@ -21,7 +21,7 @@ export class NumeralPackage extends PackageBase
      */
     public static get cascadeDelete(): AnglrPackages[]
     {
-        return [];
+        return ['@anglr/common/numeral'];
     }
 
     //######################### public methods #########################

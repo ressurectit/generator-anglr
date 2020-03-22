@@ -13,7 +13,7 @@ export class AnglrSelectMaterialPackage extends PackageBase
      */
     public static get dependsOnPackages(): AnglrPackages[]
     {
-        return [];
+        return ['@anglr/select', '@angular/material', '@jscrpt/common'];
     }
 
     /**

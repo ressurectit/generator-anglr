@@ -21,7 +21,7 @@ export class AnglrCommonPackage extends PackageBase
      */
     public static get cascadeDelete(): AnglrPackages[]
     {
-        return [];
+        return ['@anglr/common/forms', '@anglr/common/hmr', '@anglr/common/hotkeys', '@anglr/common/material', '@anglr/common/moment', '@anglr/common/numeral', '@anglr/common/positions', '@anglr/common/router', '@anglr/common/store', '@anglr/common/structured-log'];
     }
 
     //######################### public methods #########################

@@ -13,7 +13,7 @@ export class AnglrBootstrapDatetimepickerPackage extends PackageBase
      */
     public static get dependsOnPackages(): AnglrPackages[]
     {
-        return ['@jscrpt/common', '@anglr/common', 'bootstrap', 'jquery'];
+        return ['eonasdan-bootstrap-datetimepicker'];
     }
 
     /**

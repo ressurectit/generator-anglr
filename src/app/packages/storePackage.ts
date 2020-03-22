@@ -21,7 +21,7 @@ export class StorePackage extends PackageBase
      */
     public static get cascadeDelete(): AnglrPackages[]
     {
-        return [];
+        return ['@anglr/common/store'];
     }
 
     //######################### public methods #########################

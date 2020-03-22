@@ -13,7 +13,7 @@ export class JscrptCommonPackage extends PackageBase
      */
     public static get dependsOnPackages(): AnglrPackages[]
     {
-        return [];
+        return ['extend'];
     }
 
     /**
@@ -21,7 +21,7 @@ export class JscrptCommonPackage extends PackageBase
      */
     public static get cascadeDelete(): AnglrPackages[]
     {
-        return [];
+        return ['extend'];
     }
 
     //######################### public methods #########################

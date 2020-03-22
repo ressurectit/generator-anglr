@@ -13,7 +13,7 @@ export class AnglrGridMaterialPackage extends PackageBase
      */
     public static get dependsOnPackages(): AnglrPackages[]
     {
-        return [];
+        return ['@anglr/grid', '@angular/material', '@angular/cdk', '@anglr/common'];
     }
 
     /**

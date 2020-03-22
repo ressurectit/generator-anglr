@@ -13,7 +13,7 @@ export class AnglrCommonPositionsPackage extends PackageBase
      */
     public static get dependsOnPackages(): AnglrPackages[]
     {
-        return ['@jscrpt/common'];
+        return ['positions'];
     }
 
     /**

@@ -2,9 +2,9 @@ import {PackageBase} from '../packageBase';
 import {AnglrPackages} from '../interfaces/types';
 
 /**
- * Represents package modifications for typeahead
+ * Represents package modifications for crypto js
  */
-export class TypeaheadPackage extends PackageBase
+export class CryptJsPackage extends PackageBase
 {
     //######################### public properties #########################
 
@@ -21,7 +21,7 @@ export class TypeaheadPackage extends PackageBase
      */
     public static get cascadeDelete(): AnglrPackages[]
     {
-        return ['@anglr/bootstrap/typeahead'];
+        return [];
     }
 
     //######################### public methods #########################

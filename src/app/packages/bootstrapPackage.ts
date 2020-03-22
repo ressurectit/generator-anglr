@@ -21,7 +21,7 @@ export class BootstrapPackage extends PackageBase
      */
     public static get cascadeDelete(): AnglrPackages[]
     {
-        return [];
+        return ['@anglr/bootstrap'];
     }
 
     //######################### public methods #########################

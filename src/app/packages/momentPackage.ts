@@ -21,7 +21,7 @@ export class MomentPackage extends PackageBase
      */
     public static get cascadeDelete(): AnglrPackages[]
     {
-        return [];
+        return ['eonasdan-bootstrap-datetimepicker', '@anglr/common/store', '@anglr/common/moment'];
     }
 
     //######################### public methods #########################

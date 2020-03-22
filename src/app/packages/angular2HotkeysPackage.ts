@@ -2,9 +2,9 @@ import {PackageBase} from '../packageBase';
 import {AnglrPackages} from '../interfaces/types';
 
 /**
- * Represents package modifications for typeahead
+ * Represents package modifications for angular2-hotkeys
  */
-export class TypeaheadPackage extends PackageBase
+export class Angular2HotkeysPackage extends PackageBase
 {
     //######################### public properties #########################
 
@@ -13,7 +13,7 @@ export class TypeaheadPackage extends PackageBase
      */
     public static get dependsOnPackages(): AnglrPackages[]
     {
-        return [];
+        return ['angular2-hotkeys'];
     }
 
     /**
@@ -21,7 +21,7 @@ export class TypeaheadPackage extends PackageBase
      */
     public static get cascadeDelete(): AnglrPackages[]
     {
-        return ['@anglr/bootstrap/typeahead'];
+        return ['@anglr/common/hotkeys'];
     }
 
     //######################### public methods #########################

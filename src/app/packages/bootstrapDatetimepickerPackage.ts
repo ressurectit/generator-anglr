@@ -13,7 +13,7 @@ export class BootstrapDatetimepickerPackage extends PackageBase
      */
     public static get dependsOnPackages(): AnglrPackages[]
     {
-        return [];
+        return ['bootstrap', 'moment'];
     }
 
     /**
@@ -21,7 +21,7 @@ export class BootstrapDatetimepickerPackage extends PackageBase
      */
     public static get cascadeDelete(): AnglrPackages[]
     {
-        return [];
+        return ['@anglr/bootstrap/datetimepicker'];
     }
 
     //######################### public methods #########################

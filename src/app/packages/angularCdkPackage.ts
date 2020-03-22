@@ -21,7 +21,7 @@ export class AngularCdkPackage extends PackageBase
      */
     public static get cascadeDelete(): AnglrPackages[]
     {
-        return [];
+        return ['@anglr/common/material', '@anglr/grid/material'];
     }
 
     //######################### public methods #########################

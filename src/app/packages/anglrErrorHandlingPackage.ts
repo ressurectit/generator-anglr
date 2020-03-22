@@ -13,7 +13,7 @@ export class AnglrErrorHandlingPackage extends PackageBase
      */
     public static get dependsOnPackages(): AnglrPackages[]
     {
-        return [];
+        return ['@jscrpt/common', '@anglr/common', '@anglr/notifications', 'jquery', 'html2canvas', 'sourcemapped-stacktrace'];
     }
 
     /**
@@ -21,7 +21,7 @@ export class AnglrErrorHandlingPackage extends PackageBase
      */
     public static get cascadeDelete(): AnglrPackages[]
     {
-        return [];
+        return ['html2canvas', 'sourcemapped-stacktrace'];
     }
 
     //######################### public methods #########################

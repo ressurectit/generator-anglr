@@ -13,7 +13,7 @@ export class AnglrSelectPackage extends PackageBase
      */
     public static get dependsOnPackages(): AnglrPackages[]
     {
-        return [];
+        return ['@jscrpt/common', '@anglr/common', '@anglr/common/positions'];
     }
 
     /**
@@ -21,7 +21,7 @@ export class AnglrSelectPackage extends PackageBase
      */
     public static get cascadeDelete(): AnglrPackages[]
     {
-        return [];
+        return ['@anglr/select/material', '@anglr/common/positions'];
     }
 
     //######################### public methods #########################

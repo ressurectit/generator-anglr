@@ -13,7 +13,7 @@ export class AnglrCommonStructuredLogPackage extends PackageBase
      */
     public static get dependsOnPackages(): AnglrPackages[]
     {
-        return ['@jscrpt/common'];
+        return ['structured-log', '@jscrpt/common', '@anglr/common'];
     }
 
     /**

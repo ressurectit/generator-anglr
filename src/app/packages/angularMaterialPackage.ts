@@ -13,7 +13,7 @@ export class AngularMaterialPackage extends PackageBase
      */
     public static get dependsOnPackages(): AnglrPackages[]
     {
-        return [];
+        return ['@angular/cdk'];
     }
 
     /**
@@ -21,7 +21,7 @@ export class AngularMaterialPackage extends PackageBase
      */
     public static get cascadeDelete(): AnglrPackages[]
     {
-        return [];
+        return ['@anglr/common/material', '@anglr/grid/material', '@anglr/select/material'];
     }
 
     //######################### public methods #########################

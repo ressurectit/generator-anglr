@@ -13,7 +13,7 @@ export class AnglrMdHelpPackage extends PackageBase
      */
     public static get dependsOnPackages(): AnglrPackages[]
     {
-        return [];
+        return ['@jscrpt/common', '@anglr/notifications', 'marked', 'highlight.js'];
     }
 
     /**
@@ -21,7 +21,7 @@ export class AnglrMdHelpPackage extends PackageBase
      */
     public static get cascadeDelete(): AnglrPackages[]
     {
-        return [];
+        return ['marked', 'highlight.js'];
     }
 
     //######################### public methods #########################

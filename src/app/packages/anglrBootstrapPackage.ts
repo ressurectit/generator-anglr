@@ -13,7 +13,7 @@ export class AnglrBootstrapPackage extends PackageBase
      */
     public static get dependsOnPackages(): AnglrPackages[]
     {
-        return ['@jscrpt/common', '@anglr/common', 'bootstrap', 'jquery'];
+        return ['@anglr/bootstrap/core'];
     }
 
     /**
@@ -21,7 +21,7 @@ export class AnglrBootstrapPackage extends PackageBase
      */
     public static get cascadeDelete(): AnglrPackages[]
     {
-        return [];
+        return ['@anglr/bootstrap/core', '@anglr/bootstrap/datetimepicker', '@anglr/bootstrap/typeahead'];
     }
 
     //######################### public methods #########################

@@ -13,7 +13,7 @@ export class AnglrNotificationsPackage extends PackageBase
      */
     public static get dependsOnPackages(): AnglrPackages[]
     {
-        return [];
+        return ['@anglr/animations', '@jscrpt/common'];
     }
 
     /**

@@ -13,7 +13,7 @@ export class AnglrGridPackage extends PackageBase
      */
     public static get dependsOnPackages(): AnglrPackages[]
     {
-        return [];
+        return ['@jscrpt/common', '@anglr/common'];
     }
 
     /**
@@ -21,7 +21,7 @@ export class AnglrGridPackage extends PackageBase
      */
     public static get cascadeDelete(): AnglrPackages[]
     {
-        return [];
+        return ['@anglr/grid/material'];
     }
 
     //######################### public methods #########################

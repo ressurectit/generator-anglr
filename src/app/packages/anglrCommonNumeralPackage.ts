@@ -13,7 +13,7 @@ export class AnglrCommonNumeralPackage extends PackageBase
      */
     public static get dependsOnPackages(): AnglrPackages[]
     {
-        return ['@jscrpt/common'];
+        return ['@jscrpt/common', '@anglr/common', 'numeral'];
     }
 
     /**

@@ -48,4 +48,16 @@ export type AnglrPackages = '@angular/material'|
                             'file-saver'|
                             'd3'|
                             'store'|
-                            'konami';
+                            'konami'|
+                            'angular2-hotkeys'|
+                            'positions'|
+                            'structured-log'|
+                            'html2canvas'|
+                            'sourcemapped-stacktrace'|
+                            'marked'|
+                            'highlight.js'|
+                            'jquery-param'|
+                            'crypto-js'|
+                            '@stomp/stompjs'|
+                            'sockjs-client'|
+                            'extend';

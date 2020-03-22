@@ -13,7 +13,7 @@ export class AnglrBootstrapTypeaheadPackage extends PackageBase
      */
     public static get dependsOnPackages(): AnglrPackages[]
     {
-        return ['@jscrpt/common', '@anglr/common', 'bootstrap', 'jquery'];
+        return ['typeahead.js', 'handlebars'];
     }
 
     /**
