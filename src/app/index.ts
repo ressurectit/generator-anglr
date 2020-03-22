@@ -177,11 +177,21 @@ module.exports = class AnglrGenerator extends Generator
             addDistinct(activePackages, packages[packageName].dependsOnPackages);
         });
 
-        console.log(activePackages);
-
         activePackages = getArraySupplement(ALL_PACKAGES, activePackages);
 
-        console.log(activePackages);
+        let activePackagesTmp = [...activePackages];
+
+        activePackagesTmp.forEach(packageName =>
+        {
+            addDistinct(activePackages, packages[packageName].cascadeDelete);
+        });
+
+        activePackages.forEach(packageName => new packages[packageName](packageName, this).activate());
+
+        await new Promise(resolve =>
+        {
+            this.fs.commit(() => resolve());
+        });
 
         process.exit(0);
         

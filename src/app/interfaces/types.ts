@@ -6,6 +6,11 @@ export type AnglrFeatures = 'Git Version'|'Server Side Rendering'|'ES2015';
 // export type AnglrFeatures = 'Git Version'|'Server Side Rendering'|'ES2015'|'Docker'|'Translations'|'Logging'|'Service Worker'|'Hotkeys';
 
 /**
+ * Available built in packages internal
+ */
+export type AnglrPackagesInternal = AnglrPackages|'numeral-languages'|'typeahead';
+
+/**
  * Available built in packages
  */
 export type AnglrPackages = '@angular/material'|

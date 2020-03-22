@@ -28,9 +28,9 @@ export class AngularMaterialPackage extends PackageBase
 
     /**
      * Activates this package transformation
-     * @param activePackages Array of packages that are being activated
      */
-    public activate(activePackages: AnglrPackages[]): void
+    public activate(): void
     {
+        super.activate();
     }
 }
