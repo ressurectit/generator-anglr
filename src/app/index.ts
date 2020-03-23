@@ -207,8 +207,6 @@ module.exports = class AnglrGenerator extends Generator
 
         //runs post processing
         ftrs.forEach(feature => feature.instance.postprocess());
-
-        process.exit(0);
     }
 
     /**

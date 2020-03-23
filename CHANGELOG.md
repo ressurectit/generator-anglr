@@ -4,6 +4,7 @@
 
 - `anglr` generator
     - added support for enabling/disabling *Git Version* feature
+    - added support for enabling/disabling *ES2015* feature
 
 ## Version 1.0.1
 
