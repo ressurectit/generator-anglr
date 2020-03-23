@@ -2,12 +2,12 @@ import * as Generator from 'yeoman-generator';
 import * as superagent from 'superagent';
 import * as extract from 'extract-zip';
 import * as chalk from 'chalk';
-import * as path from 'path';
+import * as fs from 'fs';
 import {nameof} from '@jscrpt/common';
 
 import {GatheredData, PackageJson} from './interfaces';
 import {packages} from './packages';
-import {addDistinct, getArraySupplement} from '../utils';
+import {addDistinct, getArraySupplement, prepareNames} from '../utils';
 import {AnglrPackages, AnglrFeatures} from './interfaces/types';
 import {features} from './features';
 import {AnglrBase, AnglrType} from './anglrBase';
@@ -91,8 +91,7 @@ module.exports = class AnglrGenerator extends Generator
             {
                 type: 'input',
                 name: nameof<GatheredData>('projectName'),
-                message: 'Name of project',
-                default: process.cwd().split(path.sep).pop()
+                message: 'Name of project'
             },
             {
                 type: 'input',
@@ -115,8 +114,6 @@ module.exports = class AnglrGenerator extends Generator
                 choices: ALL_PACKAGES
             }
         ]);
-
-        
     }
 
     /**
@@ -124,6 +121,19 @@ module.exports = class AnglrGenerator extends Generator
      */
     public async writing()
     {
+        let projectNames = prepareNames(this._gatheredData.projectName);
+
+        //create new folder and set destination root
+        if(fs.existsSync(this.destinationPath(projectNames.name)))
+        {
+            console.log(chalk.red(`Directory '${projectNames.name}' already exists!`));
+
+            process.exit(-1);
+        }
+
+        fs.mkdirSync(projectNames.name);
+        this.destinationRoot(projectNames.name);
+
         //download latest universal demo
         let result = await superagent.get(SCAFFOLD_SOURCE_URL);
         
@@ -171,7 +181,7 @@ module.exports = class AnglrGenerator extends Generator
         let packageJson: PackageJson = this.fs.readJSON(this.destinationPath('package.json'));
 
         packageJson.author = this.gatheredData.author;
-        packageJson.name = this.gatheredData.projectName;
+        packageJson.name = projectNames.normalizedName;
 
         this.fs.writeJSON(this.destinationPath('package.json'), packageJson);
 

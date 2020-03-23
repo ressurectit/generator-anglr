@@ -15,8 +15,6 @@ npm install -g generator-anglr
 
 Then generate your new project:
 
-**!!! IMPORTANT !!!**: Run this command inside directory where you want to create new project, it does not create new directory project, generates files inside current directory.
-
 ```bash
 yo anglr
 ```

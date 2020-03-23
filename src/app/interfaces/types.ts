@@ -10,7 +10,8 @@ export type AnglrFeatures = 'Git Version'|'ES2015';
  */
 export type AnglrPackagesInternal = AnglrPackages|
                                     'numeral-languages'|
-                                    'typeahead';
+                                    'typeahead'|
+                                    '@kukjevov/gulp-git-version';
 
 /**
  * Available built in packages

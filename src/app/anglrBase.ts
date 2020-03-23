@@ -1,7 +1,10 @@
+import {SourceFile, Project} from 'ts-morph';
+import * as chalk from 'chalk';
 import * as Generator from 'yeoman-generator';
 
 import {AnglrPackages, AnglrFeatures, AnglrPackagesInternal} from './interfaces/types';
 import {PackageJson} from './interfaces';
+import {Dictionary} from '@jscrpt/common';
 
 /**
  * Interface for anglr type definition
@@ -83,10 +86,51 @@ export abstract class AnglrBase
      */
     protected _removePackageJsonDependency(dependency: AnglrPackagesInternal|AnglrFeatures): void
     {
-        let packageJson = this._readPackageJson();
+        this._removePackageJsonDep(dependency, 'dependencies');
+    }
 
-        delete packageJson.dependencies[dependency];
+    /**
+     * Removes package.json dev dependency
+     * @param dependency Name of dev dependency that is going to be removed
+     */
+    protected _removePackageJsonDevDependency(dependency: AnglrPackagesInternal|AnglrFeatures): void
+    {
+        this._removePackageJsonDep(dependency, 'devDependencies');
+    }
 
-        this._setPackageJson(packageJson);
+    /**
+     * Removes package.json dependency or dev dependency or peer dependency
+     * @param dependency Name of dependency that is going to be removed
+     * @param type Name of dependency type
+     */
+    protected _removePackageJsonDep(dependency: AnglrPackagesInternal|AnglrFeatures, type: keyof PackageJson): void
+    {
+        let packageJson = this._readPackageJson() as Dictionary;
+
+        delete packageJson[type][dependency];
+
+        this._setPackageJson(packageJson as PackageJson);
+    }
+
+    /**
+     * Gets source file for provided file path
+     * @param filePath Path to file for which will be source file obtained
+     */
+    protected _getSourceFile(filePath: string): SourceFile|null
+    {
+        const project = new Project();
+
+        let path = this._generator.destinationPath(filePath);
+
+        if(!this._generator.fs.exists(path))
+        {
+            console.log(chalk.yellow(`File '${filePath}' was not found!`));
+
+            return null;
+        }
+
+        project.addSourceFileAtPath(path);
+
+        return project.getSourceFile(filePath)!;
     }
 }

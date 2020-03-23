@@ -1,6 +1,11 @@
 # Changelog
 
-## Version 1.0.0
+## Version 1.0.2
+
+- `anglr` generator
+    - added support for enabling/disabling *Git Version* feature
+
+## Version 1.0.1
 
 - added new generator `anglr`
 - added new subgenerator `component`
