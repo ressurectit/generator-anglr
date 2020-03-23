@@ -8,10 +8,18 @@ import {nameof} from '@jscrpt/common';
 import {GatheredData, PackageJson} from './interfaces';
 import {packages} from './packages';
 import {addDistinct, getArraySupplement} from '../utils';
-import {AnglrPackages} from './interfaces/types';
+import {AnglrPackages, AnglrFeatures} from './interfaces/types';
+import {features} from './features';
+import {AnglrBase, AnglrType} from './anglrBase';
 
 const SCAFFOLD_ZIP = 'scaffold.zip';
 const SCAFFOLD_SOURCE_URL = 'https://github.com/kukjevov/ng-universal-demo/archive/1.0.zip';
+const ALL_FEATURES: AnglrFeatures[] =
+[
+    'Git Version',
+    'ES2015'
+];
+
 const ALL_PACKAGES: AnglrPackages[] =
 [
     '@angular/material',
@@ -96,8 +104,8 @@ module.exports = class AnglrGenerator extends Generator
                 type: 'checkbox',
                 name: nameof<GatheredData>('features'),
                 message: 'Anglr features',
-                default: ['Git Version', 'Server Side Rendering', 'ES2015'],
-                choices: ['Git Version', 'Server Side Rendering', 'ES2015']
+                default: ALL_FEATURES,
+                choices: ALL_FEATURES
             },
             {
                 type: 'checkbox',
@@ -107,6 +115,8 @@ module.exports = class AnglrGenerator extends Generator
                 choices: ALL_PACKAGES
             }
         ]);
+
+        
     }
 
     /**
@@ -170,43 +180,25 @@ module.exports = class AnglrGenerator extends Generator
             this.fs.commit(() => resolve());
         });
 
-        let activePackages = this._gatheredData.packages;
+        //activate features transformation
+        let ftrs = this._getFlaggedArray(this._gatheredData.features, getArraySupplement(ALL_FEATURES, this._gatheredData.features), this, features);
+        ftrs.forEach(feature => feature.enabled ? feature.instance.enable() : feature.instance.disable());
 
-        this._gatheredData.packages.forEach(packageName =>
-        {
-            addDistinct(activePackages, packages[packageName].dependsOnPackages);
-        });
+        //activate packages transformation
+        let {enabled, disabled} = this._getEnabledDisabledPackages(this._gatheredData.packages, this._gatheredData.features);        
 
-        activePackages = getArraySupplement(ALL_PACKAGES, activePackages);
-
-        let activePackagesTmp = [...activePackages];
-
-        activePackagesTmp.forEach(packageName =>
-        {
-            addDistinct(activePackages, packages[packageName].cascadeDelete);
-        });
-
-        activePackages.forEach(packageName => new packages[packageName](packageName, this).activate());
+        let pckgs = this._getFlaggedArray(enabled, disabled, this, packages);
+        pckgs.forEach(pckg => pckg.enabled ? pckg.instance.enable() : pckg.instance.disable());
 
         await new Promise(resolve =>
         {
             this.fs.commit(() => resolve());
         });
 
+        //runs post processing
+        ftrs.forEach(feature => feature.instance.postprocess());
+
         process.exit(0);
-        
-
-        //create git repository if not exists and setup version branch
-        if(!this.fs.exists(this.destinationPath('.git')))
-        {
-            this.spawnCommandSync('git', ['init']);
-        }
-
-        this.spawnCommandSync('git', ['checkout', '-b', '1.0']);
-        this.spawnCommandSync('git', ['add', '.']);
-        this.spawnCommandSync('git', ['commit', '-m', 'INT: initial files for project']);
-
-        this.log(chalk.green(`Git repository initialized sucessfuly`));
     }
 
     /**
@@ -227,5 +219,56 @@ module.exports = class AnglrGenerator extends Generator
         this.log(chalk.green(`App '${this.gatheredData.projectName}' was generated.`));
         this.log(chalk.whiteBright("To start application and development process, write 'npm start'"));
         this.log(chalk.whiteBright("Then your application will be running on 'http://localhost:8888'"));
+    }
+
+    //######################### private methods #########################
+
+    /**
+     * Gets computed final version of enabled and disabled packages
+     * @param selectedPackages Array of selected packages
+     * @param selectedFeatures Array of selected features
+     */
+    private _getEnabledDisabledPackages(selectedPackages: AnglrPackages[], selectedFeatures: AnglrFeatures[]): {enabled: AnglrPackages[], disabled: AnglrPackages[]}
+    {
+        console.log(selectedFeatures);
+
+        let tmp = [...selectedPackages];
+        tmp.forEach(packageName => addDistinct(selectedPackages, packages[packageName].dependsOnPackages));
+
+        let disabled = getArraySupplement(ALL_PACKAGES, selectedPackages);
+        tmp = [...disabled];
+        tmp.forEach(packageName => addDistinct(disabled, packages[packageName].cascadeDelete));
+
+        return {
+            disabled,
+            enabled: selectedPackages
+        };
+    }
+
+    /**
+    * Gets array of instances of anglr transformators
+    * @param enabled Array containing selected items
+    * @param disabled Array containing unselected items
+    * @param generator Instance of generator
+    * @param anglrTypes Dictionary of anglr types
+    */
+    private _getFlaggedArray<TData extends AnglrFeatures|AnglrPackages>(enabled: TData[], disabled: TData[], generator: Generator, anglrTypes: {[name: string]: AnglrType}): {enabled: boolean, instance: AnglrBase}[]
+    {
+        return [
+            ...enabled.map(itm =>
+            {
+                return {
+                    enabled: true,
+                    instance: new anglrTypes[itm](itm, generator)
+                };
+            }),
+            ...disabled.map(itm =>
+            {
+                return {
+                    enabled: false,
+                    instance: new anglrTypes[itm](itm, generator)
+                };
+            })
+        ];
     }
 }

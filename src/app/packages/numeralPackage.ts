@@ -27,13 +27,21 @@ export class NumeralPackage extends PackageBase
     //######################### public methods #########################
 
     /**
-     * Activates this package transformation
+     * Runs code that enable this
      */
-    public activate(): void
+    public enable(): void
     {
-        super.activate();
+        super.enable();
+    }
+
+    /**
+     * Runs code that disable this
+     */
+    public disable(): void
+    {
+        super.disable();
 
         this._removeDependenciesImport(this._name);
-        this._removeDependenciesImport('numeral-languages');
+        this._removeDependenciesImport('numeral-languages');        
     }
 }

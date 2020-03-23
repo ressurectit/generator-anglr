@@ -1,6 +1,6 @@
+import {readdirSync} from 'fs';
 import * as Generator from 'yeoman-generator';
 import * as Handlebars from 'handlebars';
-import {readdirSync} from 'fs';
 
 import {AvailableNames} from "./shared.interfaces";
 

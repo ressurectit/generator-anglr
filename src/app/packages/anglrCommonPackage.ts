@@ -27,10 +27,10 @@ export class AnglrCommonPackage extends PackageBase
     //######################### public methods #########################
 
     /**
-     * Activates this package transformation
+     * Runs code that enable this
      */
-    public activate(): void
+    public enable(): void
     {
-        super.activate();
+        super.enable();
     }
 }

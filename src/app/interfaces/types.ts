@@ -1,14 +1,16 @@
 /**
  * Available anglr features
  */
-export type AnglrFeatures = 'Git Version'|'Server Side Rendering'|'ES2015';
+export type AnglrFeatures = 'Git Version'|'ES2015';
 // planned features
-// export type AnglrFeatures = 'Git Version'|'Server Side Rendering'|'ES2015'|'Docker'|'Translations'|'Logging'|'Service Worker'|'Hotkeys';
+// export type AnglrFeatures = 'Git Version'|'Server Side Rendering'|'ES2015'|'Docker'|'Translations'|'Logging'|'Service Worker'|'Hotkeys'|'Authentication'|'Default pages';
 
 /**
  * Available built in packages internal
  */
-export type AnglrPackagesInternal = AnglrPackages|'numeral-languages'|'typeahead';
+export type AnglrPackagesInternal = AnglrPackages|
+                                    'numeral-languages'|
+                                    'typeahead';
 
 /**
  * Available built in packages

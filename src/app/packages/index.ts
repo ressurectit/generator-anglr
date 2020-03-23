@@ -51,12 +51,12 @@ import {CryptJsPackage} from './cryptoJsPackage';
 import {StompJsPackage} from './stompJsPackage';
 import {SockJsPackage} from './sockJsPackage';
 import {ExtendPackage} from './extendPackage';
-import {PackageType} from '../packageBase';
+import {AnglrType} from '../anglrBase';
 
 /**
  * Packages that are available for processing
  */
-export const packages: {[name: string]: PackageType} =
+export const packages: {[name: string]: AnglrType} =
 {
     '@angular/material': AngularMaterialPackage,
     '@angular/cdk': AngularCdkPackage,

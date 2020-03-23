@@ -1,48 +1,33 @@
 import {Project, ImportDeclaration} from "ts-morph";
-import * as Generator from 'yeoman-generator';
 import * as chalk from 'chalk';
 import * as path from 'path';
 
-import {AnglrPackages, AnglrPackagesInternal} from './interfaces/types';
-import {PackageJson} from './interfaces';
-
-/**
- * Interface for package type definition
- */
-export interface PackageType
-{
-    /**
-     * Array of packages that is this package dependend on
-     */
-    readonly dependsOnPackages: AnglrPackages[];
-
-    /**
-     * Array of packages that should be deleted when this one is not used
-     */
-    readonly cascadeDelete: AnglrPackages[];
-
-    new(_name: AnglrPackages, _generator: Generator): PackageBase;
-}
+import {AnglrPackagesInternal, AnglrFeatures} from './interfaces/types';
+import {AnglrBase} from './anglrBase';
 
 /**
  * Base class for package installation
  */
-export abstract class PackageBase
+export abstract class PackageBase extends AnglrBase
 {
-    //######################### constructor #########################
-    constructor(protected _name: AnglrPackages,
-                protected _generator: Generator)
-    {
-    }
-
     //######################### public methods #########################
 
     /**
-     * Activates this package transformation
+     * Runs code that enable this
      */
-    public activate(): void
+    public enable(): void
     {
-        console.log(chalk.blueBright(`Removing package '${this._name}'`));
+        console.log(chalk.whiteBright(`Enabling package '${this._name}'`));
+
+        this._enabled = true;
+    }
+
+    /**
+     * Runs code that disable this
+     */
+    public disable(): void
+    {
+        console.log(chalk.whiteBright(`Disabling package '${this._name}'`));
 
         this._removePackageJsonDependency(this._name);
         this._removeWebpackDevImport(this._name);
@@ -51,40 +36,10 @@ export abstract class PackageBase
     //######################### protected methods #########################
 
     /**
-     * Reads package.json
-     */
-    protected _readPackageJson(): PackageJson
-    {
-        return this._generator.fs.readJSON(this._generator.destinationPath('package.json'));
-    }
-
-    /**
-     * Writes package.json new content
-     * @param packageJson Package json content to be written
-     */
-    protected _setPackageJson(packageJson: PackageJson): void
-    {
-        this._generator.fs.writeJSON(this._generator.destinationPath('package.json'), packageJson);
-    }
-
-    /**
-     * Removes package.json dependency
-     * @param dependency Name of dependency that is going to be removed
-     */
-    protected _removePackageJsonDependency(dependency: AnglrPackages): void
-    {
-        let packageJson = this._readPackageJson();
-
-        delete packageJson.dependencies[dependency];
-
-        this._setPackageJson(packageJson);
-    }
-
-    /**
      * Removes webpack.config.dev.imports.js import statement for dependency
      * @param dependency Name of dependency that is going to be removed
      */
-    protected _removeWebpackDevImport(dependency: AnglrPackagesInternal): void
+    protected _removeWebpackDevImport(dependency: AnglrPackagesInternal|AnglrFeatures): void
     {
         this._removeImport(dependency, 'webpack.config.dev.imports.js');
     }
@@ -93,16 +48,16 @@ export abstract class PackageBase
      * Removes dependencies.browser.ts import statement for dependency
      * @param dependency Name of dependency that is going to be removed
      */
-    protected _removeDependenciesBrowserImport(dependency: AnglrPackagesInternal): void
+    protected _removeDependenciesBrowserImport(dependency: AnglrPackagesInternal|AnglrFeatures): void
     {
         this._removeImport(dependency, path.join('app', 'dependencies.browser.ts'));
-    
     }
+
     /**
      * Removes dependencies.ts import statement for dependency
      * @param dependency Name of dependency that is going to be removed
      */
-    protected _removeDependenciesImport(dependency: AnglrPackagesInternal): void
+    protected _removeDependenciesImport(dependency: AnglrPackagesInternal|AnglrFeatures): void
     {
         this._removeImport(dependency, path.join('app', 'dependencies.ts'));
     }
@@ -112,7 +67,7 @@ export abstract class PackageBase
      * @param dependency Name of dependency that is going to be removed
      * @param file Path to file from which will be dependency removed
      */
-    protected _removeImport(dependency: AnglrPackagesInternal, file: string): void
+    protected _removeImport(dependency: AnglrPackagesInternal|AnglrFeatures, file: string): void
     {
         const project = new Project();
 
