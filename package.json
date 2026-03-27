@@ -43,7 +43,7 @@
         "anglr-formatter": "next",
         "chalk": "3.0.0",
         "yosay": "2.0.2",
-        "handlebars": "4.7.3",
+        "handlebars": "4.7.9",
         "ts-morph": "7.0.0",
         "cheerio": "1.0.0-rc.3",
         "superagent": "5.2.2",
